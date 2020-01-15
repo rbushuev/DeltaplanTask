@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DeltaplanTask.Data;
+using DeltaplanTask.Middleware;
+using DeltaplanTask.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +32,8 @@ namespace DeltaplanTask
             services.AddDbContext<DP_MainContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DP_Main")));
 
+            services.AddScoped<IAuthServices, AuthClientAPIKeyServices>();
+
             services.AddControllers().AddXmlSerializerFormatters();
         }
 
@@ -41,11 +45,12 @@ namespace DeltaplanTask
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseMiddleware<AuthenticationAPIKEYClientMiddleware>();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

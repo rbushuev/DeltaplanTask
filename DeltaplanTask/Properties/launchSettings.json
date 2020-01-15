@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/getTable/stmapiclients",
+      "launchUrl": "api/stmapiclients",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
