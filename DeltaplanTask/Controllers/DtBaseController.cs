@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DeltaplanTask.Data;
+using DeltaplanTask.Helpers;
 using DeltaplanTask.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,13 @@ namespace DeltaplanTask.Controllers
         public async Task<ActionResult<IEnumerable<DtBase>>> DtBase()
         {
             return await _context.DtBase.ToListAsync();
+        }
+
+        //POST: api/dtbase/{json/xml}
+        [HttpPost]
+        public ActionResult Post([FromBody]PagingParameters param)
+        {
+            return Ok(_context.DtBase.Skip((param.PageNumber - 1) * param.CountObject).Take(param.CountObject));
         }
     }
 }

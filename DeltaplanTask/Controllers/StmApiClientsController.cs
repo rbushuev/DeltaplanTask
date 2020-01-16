@@ -24,20 +24,17 @@ namespace DeltaplanTask.Controllers
         }
 
         // GET: api/stmapiclients/{json/xml}
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<StmApiClient>>> StmApiClients()
-        //{
-        //    return await _context.StmApiClients.ToListAsync();
-        //}
-
-        // GET: api/stmapiclients/{json/xml}
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<StmApiClient>>> StmApiClients([FromQuery]PagingParameters param)
+        public async Task<ActionResult<IEnumerable<StmApiClient>>> Get()
         {
-            return await _context.StmApiClients
-                .Skip((param.PageNumber - 1) * param.CountObject)
-                .Take(param.CountObject)
-                .ToListAsync();
+            return await _context.StmApiClients.ToListAsync();
+        }
+
+        //POST: api/stmapiclients/{json/xml}
+        [HttpPost]
+        public ActionResult Post([FromBody]PagingParameters param)
+        {
+            return Ok(_context.StmApiClients.Skip((param.PageNumber - 1) * param.CountObject).Take(param.CountObject));
         }
     }
 }
